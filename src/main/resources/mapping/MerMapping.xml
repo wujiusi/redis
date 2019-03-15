@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.natural.dao.MerDao">
+    <resultMap id="merResultMap" type="com.natural.entity.Mer">
+        <result column="MER_ID" property="merId"/>
+        <result column="MER_NAME" property="merName"/>
+    </resultMap>
+
+    <select id="getMerById" resultMap="merResultMap">
+        SELECT MER_ID,MER_NAME FROM MER WHERE MER_ID=#{merId};
+    </select>
+
+    <insert id="addMer" parameterType="com.natural.entity.Mer">
+        INSERT INTO MER(MER_ID,MER_NAME) VALUES (#{merId},#{merName}) ;
+    </insert>
+
+    <update id="updateMer" parameterType="com.natural.entity.Mer">
+        UPDATE MER
+        <trim prefix="SET" suffixOverrides="," >
+            <if test="merId!= null">
+                MER_ID=#{merId},
+            </if>
+            <if test="merName!= null">
+                MER_NAME=#{merName},
+            </if>
+        </trim>
+        WHERE MER_ID=#{merId}
+    </update>
+
+    <delete id="deleteMer">
+        DELETE FROM MER WHERE MER_ID=#{merId}
+    </delete>
+
+</mapper>
